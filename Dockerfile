@@ -19,7 +19,7 @@ RUN usermod -aG docker ${NB_USER}
 
 RUN service docker start
 RUN service --status-all | grep docker
-RUN service docker restart
+RUN nohub sh dockerd &
 RUN service --status-all | grep docker
 
 USER ${NB_USER}
