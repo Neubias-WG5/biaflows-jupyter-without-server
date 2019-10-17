@@ -6,27 +6,19 @@ ENV USER ${NB_USER}
 ENV NB_UID ${NB_UID}
 ENV HOME /home/${NB_USER}
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Install Docker
 USER root
+RUN apt-get update && apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common -y
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable"
+RUN apt update
+RUN apt-cache policy docker-ce
+RUN sudo apt install docker-ce -y
+RUN usermod -aG docker ${NB_USER}
 
-RUN apt-get update -qq && apt-get install -qqy \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    lxc \
-    iptables
-    
-# Install Docker from Docker Inc. repositories.
-RUN curl -sSL https://get.docker.com/ | sh
-
-# Install the magic wrapper.
-ADD ./wrapdocker /usr/local/bin/wrapdocker
-RUN chmod +x /usr/local/bin/wrapdocker
-
-# Define additional metadata for our image.
-VOLUME /var/lib/docker
-CMD ["wrapdocker"]
-
-USER ${NB_USER}
+service docker start
+service docker status
 
 USER ${NB_USER}
 COPY . ${HOME}
