@@ -17,8 +17,8 @@ RUN apt-cache policy docker-ce
 RUN sudo apt install docker-ce -y
 RUN usermod -aG docker ${NB_USER}
 
-service docker start
-service docker status
+RUN service docker start
+RUN service docker status
 
 USER ${NB_USER}
 COPY . ${HOME}
