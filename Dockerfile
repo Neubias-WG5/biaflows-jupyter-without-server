@@ -22,7 +22,14 @@ RUN service --status-all | grep docker
 RUN nohub sh dockerd &
 RUN service --status-all | grep docker
 
+RUN apt-get install -y uidmap
+RUN apt-get install kmod -y
+# RUN modprobe ip_tables
+
 USER ${NB_USER}
+RUN curl -sSL https://get.docker.com/rootless | sh
+
+
 COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME}
