@@ -27,9 +27,9 @@ RUN apt-get install kmod -y
 # RUN modprobe ip_tables
 
 USER ${NB_USER}
-RUN export XDG_RUNTIME_DIR=/tmp/docker-1000
-RUN export DOCKER_HOST=unix:///tmp/docker-1000/docker.sock
-RUN export export PATH=/home/jovyan/bin:$PATH
+RUN echo 'export XDG_RUNTIME_DIR=/tmp/docker-1000' >> ~/.bashrc
+RUN export DOCKER_HOST=unix:///tmp/docker-1000/docker.sock >> ~/.bashrc
+RUN export export PATH=/home/jovyan/bin:$PATH >> ~/.bashrc
 COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME}
