@@ -24,10 +24,10 @@ RUN service --status-all | grep docker
 
 RUN apt-get install -y uidmap
 RUN apt-get install kmod -y
-RUN modprobe ip_tables
+# RUN modprobe ip_tables
 
 USER ${NB_USER}
-RUN curl -sSL https://get.docker.com/rootless | sh
+RUN curl -sSL https://get.docker.com/rootless 
 
 
 COPY . ${HOME}
