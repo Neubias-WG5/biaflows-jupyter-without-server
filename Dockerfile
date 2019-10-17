@@ -27,9 +27,6 @@ RUN apt-get install kmod -y
 # RUN modprobe ip_tables
 
 USER ${NB_USER}
-RUN curl -sSL https://get.docker.com/rootless 
-
-
 COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME}
