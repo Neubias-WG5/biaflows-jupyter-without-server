@@ -19,11 +19,13 @@ RUN usermod -aG docker ${NB_USER}
 
 RUN service docker start
 RUN service --status-all | grep docker
+RUN service docker restart
+RUN service --status-all | grep docker
 
 USER ${NB_USER}
 COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME}
-#USER ${NB_USER}
+USER ${NB_USER}
 
 
